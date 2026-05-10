@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Android Info Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+    <!-- nav-wrapper: hamburger + collapsible tab menu are siblings, so menu drops right below the button -->
+    <div class="nav-wrapper">
+        <div class="topbar">
+            <div class="topbar-brand">
+                <span class="topbar-logo"><i class="fas fa-mobile-alt"></i></span>
+                <span class="topbar-title">Android Info Hub</span>
+            </div>
+            <button id="hamburgerBtn" class="hamburger" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+        </div>
+        <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="androidTab"><i class="fas fa-key"></i> Secret Codes + Compatible</button>
+            <button class="tab-btn" data-tab="phoneCodesTab"><i class="fas fa-list"></i> Phone Codes</button>
+            <button class="tab-btn" data-tab="ussdTab"><i class="fas fa-dial"></i> USSD Codes</button>
+            <button class="tab-btn" data-tab="hackTab"><i class="fas fa-microchip"></i> Hack / Engineering</button>
+            <button class="tab-btn" data-tab="mobileTipsTab"><i class="fas fa-life-ring"></i> Mobile Tips</button>
+            <button class="tab-btn" data-tab="tricksTab"><i class="fas fa-magic"></i> Android Tricks</button>
+            <button class="tab-btn" data-tab="deviceTab"><i class="fas fa-chart-line"></i> Device Info &amp; Parameters</button>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1><i class="fas fa-mobile-alt"></i> Android <span style="background: linear-gradient(135deg,#0f5b7a,#2a8bbf); -webkit-background-clip:text; background-clip:text; color:transparent;">Deep</span> Codes</h1>
+                <div class="hero-typewriter-line">
+            <span id="heroTyped" class="hero-typed"></span><span class="hero-cursor">|</span>
+        </div>
+    </div>
+
+    <div class="disclaimer-badge">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span><strong>Educational &amp; diagnostic use only.</strong> Some codes (especially Hack/Factory reset) may erase data or alter device settings. Use at your own risk. <strong>Compatibility may vary</strong> based on brand, carrier, and Android version.</span>
+    </div>
+
+    <!-- Global search for smart filtering (filters the active panel) -->
+    <div style="display:flex; justify-content:center; margin-bottom:1rem;">
+        <input id="globalSearch" class="global-search" placeholder="Search codes, descriptions or tricks..." aria-label="Search" />
+    </div>
+
+    <!-- SECRET CODES PANEL with compatibility -->
+    <div id="androidTab" class="tab-pane active-pane">
+        <div class="card-grid" id="androidCodesContainer"></div>
+        <div class="footer-note" style="margin-top:1.5rem"><i class="fas fa-dialpad"></i> Dial these codes in your phone's dialer. Compatibility badges show which devices typically support each code.</div>
+    </div>
+
+    <div id="ussdTab" class="tab-pane">
+        <div class="card-grid" id="ussdCodesContainer"></div>
+        <div class="footer-note" style="margin-top:1.5rem"><i class="fas fa-sim-card"></i> USSD codes vary by carrier &amp; region. Mostly work for network info &amp; call forwarding.</div>
+    </div>
+
+    <div id="hackTab" class="tab-pane">
+        <div class="card-grid" id="hackCodesContainer"></div>
+        <div class="disclaimer-badge" style="margin-top:1rem; background:#ffded5;">
+            <i class="fas fa-skull-crosswalk"></i>
+            <span><strong>⚠️ DANGER ZONE:</strong> Factory reset codes will wipe all data. Engineering menus can modify radio/network parameters. Use extreme caution.</span>
+        </div>
+    </div>
+
+    <!-- PHONE CODES (embedded) -->
+    <div id="phoneCodesTab" class="tab-pane">
+        <div class="info-panel" style="padding:1rem; border-radius:18px; background:white;">
+            <h3><i class="fas fa-list"></i> Country Phone Codes</h3>
+            <iframe src="phone_codes.html" title="Phone Codes" style="width:100%; height:600px; border:0; border-radius:12px; margin-top:0.8rem;"></iframe>
+            <div class="footer-note" style="margin-top:0.8rem;">Embedded phone codes viewer. Open in a new tab if needed.</div>
+        </div>
+    </div>
+
+    <!-- ANDROID TRICKS PANEL -->
+    <div id="tricksTab" class="tab-pane">
+        <div class="info-panel" style="background: white; border-radius: 28px; padding: 1.5rem;">
+            <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-lightbulb"></i> Useful Android Tricks &amp; Tweaks</h3>
+            <div class="tricks-grid" id="tricksContainer">
+                <!-- dynamic cards injected via JS -->
+            </div>
+            <div class="footer-note" style="margin-top: 1.5rem; text-align: left; background: #eef2fa; padding: 1rem; border-radius: 20px;">
+                <i class="fas fa-info-circle"></i> These tips work on most Android devices (Android 9+). Some may require minor adjustments per manufacturer.
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE TIPS PANEL -->
+    <div id="mobileTipsTab" class="tab-pane">
+        <div class="info-panel" style="background: white; border-radius: 28px; padding: 1.5rem;">
+            <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-lightbulb"></i> Practical Mobile Tips</h3>
+            <div class="tricks-grid" id="mobileTipsContainer"></div>
+            <div class="footer-note" style="margin-top:1.5rem; background:#eef2fa; padding:1rem; border-radius:20px;">
+                <i class="fas fa-android"></i> These tips work on most Android devices (Android 9+). Some settings may vary by brand.
+            </div>
+        </div>
+    </div>
+
+    <div id="deviceTab" class="tab-pane">
+        <div class="info-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                <h3><i class="fas fa-microphone-alt"></i> Live Device Telemetry</h3>
+                <button class="refresh-btn" id="refreshDeviceInfo"><i class="fas fa-sync-alt"></i> Refresh data</button>
+            </div>
+            <div id="deviceInfoGrid" class="info-grid"></div>
+            <div style="font-size: 0.75rem; margin-top: 1rem; background:#eef2fa; border-radius: 20px; padding: 0.8rem;">
+                <i class="fas fa-info-circle"></i> Parameters based on browser APIs: battery, network, memory, hardware concurrency.
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-disclaimer">
+            <h4><i class="fas fa-exclamation-circle"></i> Disclaimer &amp; Terms of Use</h4>
+            <p><strong>Educational &amp; Diagnostic Use Only:</strong> The codes and tricks provided in this application are for informational, educational, and diagnostic purposes. They are intended for advanced users and developers.</p>
+            <p><strong>Use at Your Own Risk:</strong> Certain codes (especially those in the "Hack / Engineering" section, such as Factory or Hard Reset codes) will completely wipe your device data, modify radio network parameters, or alter system settings permanently. We hold no responsibility for any data loss, device bricking, or system instability that may occur from using these codes.</p>
+            <p><strong>Device Compatibility:</strong> Not all codes work on all Android devices. Code execution depends on the device manufacturer, Android version, firmware build, and cellular carrier restrictions. Proceed with caution.</p>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Android Info Hub. Built for developers &amp; tech enthusiasts.</p>
+        </div>
+    </footer>
+</div>
+<div id="toastMsg" class="toast-msg">✅ Copied to clipboard</div>
+
+<script src="script.js"></script>
+
+<style>
+  .hero-typewriter-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.9rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    min-height: 2rem;
+  }
+  .hero-typed {
+    animation: colorCycle 3s linear infinite;
+  }
+  @keyframes colorCycle {
+    0%   { color: #1e6f9f; }
+    14%  { color: #9b27af; }
+    28%  { color: #e67e22; }
+    42%  { color: #27ae60; }
+    57%  { color: #e74c3c; }
+    71%  { color: #2980b9; }
+    85%  { color: #f39c12; }
+    100% { color: #1e6f9f; }
+  }
+  .hero-cursor {
+    display: inline-block;
+    color: #2a8bbf;
+    font-weight: 200;
+    font-size: 1.3rem;
+    animation: cursorBlink 0.75s step-end infinite;
+    margin-left: 2px;
+  }
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>
+
+<script>
+(function () {
+  const phrases = [
+    "Secret codes",
+    "USSD commands",
+    "Diagnostic tools",
+    "Device telemetry",
+    "Compatibility guides"
+  ];
+  const el = document.getElementById("heroTyped");
+  let phraseIdx = 0, charIdx = 0, deleting = false;
+  const typeSpeed = 70, deleteSpeed = 40, pauseAfterType = 1600, pauseAfterDelete = 400;
+
+  function tick() {
+    const current = phrases[phraseIdx];
+    if (!deleting) {
+      el.textContent = current.slice(0, ++charIdx);
+      if (charIdx === current.length) {
+        deleting = true;
+        return setTimeout(tick, pauseAfterType);
+      }
+      setTimeout(tick, typeSpeed);
+    } else {
+      el.textContent = current.slice(0, --charIdx);
+      if (charIdx === 0) {
+        deleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        return setTimeout(tick, pauseAfterDelete);
+      }
+      setTimeout(tick, deleteSpeed);
+    }
+  }
+  setTimeout(tick, 500);
+})();
+</script>
+</body>
+</html>

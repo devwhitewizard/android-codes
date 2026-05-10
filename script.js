@@ -51,6 +51,7 @@ const secretCodesByBrand = {
         { code: "*200#", desc: "Safaricom Postpaid Menu", compatible: "Safaricom Kenya" },
         { code: "*234#", desc: "MPESA Customer Service", compatible: "Safaricom Kenya" },
         { code: "*456#", desc: "Safaricom General Services", compatible: "Safaricom Kenya" },
+        { code: "*544#", desc: "Safaricom Bundles", compatible: "Safaricom Kenya" },
         
         // Airtel & Telkom
         { code: "*100#", desc: "Airtel Kenya Prepaid Menu", compatible: "Airtel Kenya" },

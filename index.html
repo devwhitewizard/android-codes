@@ -50,8 +50,18 @@
 
     <!-- SECRET CODES PANEL with compatibility -->
     <div id="androidTab" class="tab-pane active-pane">
-        <div class="card-grid" id="androidCodesContainer"></div>
-        <div class="footer-note" style="margin-top:1.5rem"><i class="fas fa-dialpad"></i> Dial these codes in your phone's dialer. Compatibility badges show which devices typically support each code.</div>
+        <!-- Brand Categories Grid -->
+        <div id="brandsGrid" class="brands-grid"></div>
+        
+        <!-- Filtered Codes Section (hidden by default) -->
+        <div id="brandCodesSection" style="display: none;">
+            <div class="brand-header">
+                <button id="backToBrandsBtn" class="action-btn back-btn"><i class="fas fa-arrow-left"></i></button>
+                <h2 id="brandTitle" class="brand-title">Brand Codes</h2>
+            </div>
+            <div class="card-grid" id="androidCodesContainer"></div>
+            <div class="footer-note" style="margin-top:1.5rem"><i class="fas fa-dialpad"></i> Dial these codes in your phone's dialer. Compatibility badges show which devices typically support each code.</div>
+        </div>
     </div>
 
     <div id="ussdTab" class="tab-pane">

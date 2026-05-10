@@ -1,41 +1,82 @@
- // ---------- ENHANCED SECRET CODES WITH COMPATIBLE DEVICES ----------
-    const androidCodes = [
-        { code: "*#06#", desc: "IMEI / Device ID — unique hardware identifier", compatible: "✅ Universal (all Android & feature phones)" },
-        { code: "*#0*#", desc: "LCD & sensor test (display, vibration, touch, camera)", compatible: "📱 Samsung Galaxy series, some Motorola" },
-        { code: "*#*#4636#*#*", desc: "Phone info, battery stats, usage statistics, WiFi info", compatible: "🔧 Most stock Android, Pixel, Sony, OnePlus, Xiaomi" },
-        { code: "*#*#34971539#*#*", desc: "Camera firmware, sensor information & details", compatible: "📸 Samsung, older LG, some Mediatek devices" },
-        { code: "*#*#232338#*#*", desc: "WiFi MAC address display", compatible: "🌐 Most Android (especially Qualcomm chips)" },
-        { code: "*#*#1234#*#*", desc: "PDA, CSC, and phone firmware version", compatible: "🧩 Samsung Galaxy (stock ROMs)" },
-        { code: "*#*#2222#*#*", desc: "FTA Hardware version (Samsung)", compatible: "⚙️ Samsung only" },
-        { code: "*#*#1111#*#*", desc: "FTA Software version", compatible: "📀 Samsung devices" },
-        { code: "*#*#2663#*#*", desc: "Touchscreen firmware version", compatible: "🖱️ Samsung, some Huawei" },
-        { code: "*#*#3264#*#*", desc: "RAM information (total & used)", compatible: "🧠 Older Samsung, Android 6-8 devices" },
-        { code: "*#*#0842#*#*", desc: "Vibration & backlight test", compatible: "📳 Motorola, Samsung, LG" },
-        { code: "*#*#0673#*#*", desc: "Audio test / Melody test mode", compatible: "🎵 Sony Xperia, Samsung, OnePlus" },
-        { code: "*#*#232339#*#*", desc: "WLAN / Wi-Fi test mode", compatible: "📡 Broadcom/Qualcomm devices (Samsung, Pixel)" },
-        { code: "*#*#1575#*#*", desc: "GPS receiver test & status", compatible: "📍 Most Android (especially with Qualcomm GPS)" },
-        { code: "*#*#7262626#*#*", desc: "Field Test / Engineering mode", compatible: "📶 Qualcomm-based phones (Xiaomi, OnePlus, Realme)" },
-        { code: "*#*#8255#*#*", desc: "Google Talk service monitoring", compatible: "☁️ Legacy Android (pre-Android 9)" },
-        { code: "*#*#0*#*#*", desc: "Display & touch test (variant)", compatible: "📱 Motorola, Nokia, some Asus" },
-        { code: "*#*#64663#*#*", desc: "Hardware testing (Huawei/Honor)", compatible: "🔧 Huawei, Honor devices" },
-        { code: "*#*#6484#*#*", desc: "Hardware test mode (Xiaomi)", compatible: "📲 Xiaomi, Redmi, POCO (Miui test menu)" },
-        { code: "*#*#3646633#*#*", desc: "Engineering mode (MediaTek)", compatible: "📟 MediaTek chipsets (Tecno, Infinix, Realme, Xiaomi)" }
-    ];
+// ---------- ENHANCED SECRET CODES WITH COMPATIBLE DEVICES ----------
+const secretCodesByBrand = {
+    "Samsung": [
+        { code: "*#0*#", desc: "LCD & sensor test (display, vibration, touch, camera)", details: "Opens a hidden test menu. Works on most Galaxy S and Note series." },
+        { code: "*#0011#", desc: "Service menu with RF band / signal details", details: "Shows real-time signal strength, band info, and network stats." },
+        { code: "*#1234#", desc: "PDA, CSC, and phone firmware version", details: "Displays current firmware build numbers." },
+        { code: "*#0228#", desc: "Battery status & calibration", details: "Shows voltage, temperature, and allows battery gauge reset." },
+        { code: "*#7353#", desc: "Quick test menu (audio, sensors, LED)", details: "Tests speaker, mic, vibration, and notification LED." },
+        { code: "*#0808#", desc: "USB settings (MTP, ADB, etc.)", details: "Change USB mode without Developer Options." }
+    ],
+    "Tecno / Infinix / Itel": [
+        { code: "*#*#3646633#*#*", desc: "Engineering mode (MediaTek)", details: "Access hardware testing, band selection, and audio tuning." },
+        { code: "*#*#6484#*#*", desc: "Hardware test mode", details: "Tests LCD, touch, camera, sensors, speaker." },
+        { code: "*#*#4636#*#*", desc: "Phone info & battery stats", details: "Shows signal strength, network type, battery health." },
+        { code: "*#*#2664#*#*", desc: "Touchscreen test", details: "Draw on screen to verify touch accuracy." }
+    ],
+    "Xiaomi / Redmi / POCO": [
+        { code: "*#*#6484#*#*", desc: "Hardware test mode (CIT)", details: "Comprehensive test of all hardware components." },
+        { code: "*#*#64663#*#*", desc: "Hardware testing (Huawei also uses similar)", details: "Tests camera, sensors, battery, and more." },
+        { code: "*#*#4636#*#*", desc: "Phone info & usage statistics", details: "Network, battery, app usage." },
+        { code: "*#*#6485#*#*", desc: "Battery status (charge cycle, health)", details: "Shows real battery capacity and cycle count." },
+        { code: "*#*#225#*#*", desc: "Calendar & storage info", details: "Shows calendar events and storage details." }
+    ],
+    "Huawei / Honor": [
+        { code: "*#*#2846579#*#*", desc: "Project Menu (engineering)", details: "Network settings, background data, logs, and more." },
+        { code: "*#*#14789632#*#*", desc: "Test menu for hardware", details: "Test LCD, touch, speaker, mic, camera." },
+        { code: "*#*#12131415#*#*", desc: "GPS test", details: "Shows GPS satellite info and accuracy." },
+        { code: "*#*#6130#*#*", desc: "Camera firmware info", details: "Displays camera module details and firmware." }
+    ],
+    "OnePlus": [
+        { code: "*#*#564548#*#*", desc: "Engineering mode / Logkit", details: "Access logs, crash dumps, and hardware tests." },
+        { code: "*#*#232338#*#*", desc: "WiFi MAC address", details: "Shows MAC and network diagnostics." },
+        { code: "*#*#426#*#*", desc: "Google Play Services", details: "Check GMS connection and push notifications." }
+    ],
+    "Google Pixel (Stock Android)": [
+        { code: "*#*#4636#*#*", desc: "Testing menu", details: "Phone info, battery stats, WiFi, usage." },
+        { code: "*#*#7287#*#*", desc: "Quick hardware test", details: "Tests vibration, display, and sensors." },
+        { code: "*#*#34971539#*#*", desc: "Camera details", details: "Shows camera firmware and sensor information." }
+    ],
+    "Nokia / Motorola (Near Stock)": [
+        { code: "*#*#4636#*#*", desc: "Phone info", details: "Network & battery info." },
+        { code: "*#*#0#*#*", desc: "Display test (Motorola)", details: "Tests screen colors and touch." },
+        { code: "*#*#2664#*#*", desc: "Touch test", details: "Full screen touch test." }
+    ]
+};
 
-    // USSD codes (no changes needed, compatibility depends on carrier)
+    // USSD codes (Kenya & Banking & General)
     const ussdCodes = [
-        { code: "*#123#", desc: "Check account balance / prepaid balance (carrier dependent)", compatible: "📶 Varies by operator (Airtel, MTN, Vodafone etc)" },
-        { code: "*#0#", desc: "Quick test menu (Motorola, some Samsung)", compatible: "🔍 Motorola, some Samsung legacy" },
-        { code: "*#232#", desc: "Bluetooth test & address display", compatible: "📡 Samsung, Nokia, HMD" },
-        { code: "*#0011#", desc: "Service menu with RF band / signal details", compatible: "📡 Samsung (main), some LG" },
-        { code: "*#7353#", desc: "Quick test menu (audio, sensors, LED)", compatible: "🔊 Samsung only" },
-        { code: "*#21#", desc: "Check call forwarding status (unconditional)", compatible: "☎️ Universal GSM USSD" },
-        { code: "*#31#", desc: "Check own number presentation (CLIR status)", compatible: "📞 Universal GSM" },
-        { code: "*#62#", desc: "Forwarding when unreachable / no reply", compatible: "↪️ Universal GSM" },
-        { code: "*#67#", desc: "Forwarding when busy check", compatible: "⏸️ Universal GSM" },
-        { code: "##002#", desc: "Disable all call diversions & forwarding", compatible: "🚫 Universal GSM" },
-        { code: "*#*#checkin#*#*", desc: "Android checkin service (force sync)", compatible: "🤖 All Android (dial *#*#2432546#*#*)" },
-        { code: "*#*#426#*#*", desc: "Google Play Services diagnostics & events", compatible: "📦 All Android with GMS" }
+        // Safaricom
+        { code: "*100#", desc: "Safaricom Prepaid Menu", compatible: "Safaricom Kenya" },
+        { code: "*200#", desc: "Safaricom Postpaid Menu", compatible: "Safaricom Kenya" },
+        { code: "*234#", desc: "MPESA Customer Service", compatible: "Safaricom Kenya" },
+        { code: "*456#", desc: "Safaricom General Services", compatible: "Safaricom Kenya" },
+        
+        // Airtel & Telkom
+        { code: "*100#", desc: "Airtel Kenya Prepaid Menu", compatible: "Airtel Kenya" },
+        { code: "#123#", desc: "Airtel / Telkom Main Menu", compatible: "Airtel & Telkom Kenya" },
+        { code: "*160#", desc: "T-Kash Menu", compatible: "Telkom Kenya" },
+        
+        // Government & Utility Services
+        { code: "*254#", desc: "Hustler Fund", compatible: "Govt & Utilities" },
+        { code: "*977#", desc: "KPLC Tokens", compatible: "Govt & Utilities" },
+        { code: "*155#", desc: "NHIF Self Service", compatible: "Govt & Utilities" },
+        { code: "*642#", desc: "HELB (Loans)", compatible: "Govt & Utilities" },
+        { code: "*303#", desc: "NSSF", compatible: "Govt & Utilities" },
+        
+        // Banking Codes
+        { code: "*247#", desc: "Equity Bank", compatible: "Banking" },
+        { code: "*522#", desc: "KCB Bank", compatible: "Banking" },
+        { code: "*667#", desc: "Co-op Bank", compatible: "Banking" },
+        { code: "*901#", desc: "Access Bank", compatible: "Banking" },
+        { code: "*737#", desc: "GTB Bank", compatible: "Banking" },
+        { code: "*894#", desc: "FirstBank", compatible: "Banking" },
+        
+        // General Android Codes
+        { code: "*#06#", desc: "IMEI Number", compatible: "General Android" },
+        { code: "#31# [Number]", desc: "Hide Number (Call)", compatible: "General Android" },
+        { code: "*#43#", desc: "Call Waiting Status/Activate", compatible: "General Android" },
+        { code: "**21*[Number]#", desc: "Call Forwarding Unconditional", compatible: "General Android" }
     ];
 
     // Hack / Advanced codes with some compatibility
@@ -203,10 +244,11 @@ function renderTricks() {
             descSpan.className = 'desc';
             descSpan.innerText = item.desc;
 
-            if (item.compatible) {
+            const metaInfo = item.compatible || item.details;
+            if (metaInfo) {
                 const compatSpan = document.createElement('div');
                 compatSpan.className = 'compat-badge';
-                compatSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${item.compatible}`;
+                compatSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${metaInfo}`;
                 descSpan.appendChild(compatSpan);
             }
 
@@ -419,9 +461,49 @@ function renderTricks() {
 
     // load all codes with compatibility (secret codes now have device compatibility)
     function loadAllStaticCodes() {
-        renderCodeList('androidCodesContainer', androidCodes, false);
+        // androidCodesContainer is now populated dynamically when a brand is clicked
         renderCodeList('ussdCodesContainer', ussdCodes, false);
         renderCodeList('hackCodesContainer', hackCodes, true);
+    }
+
+    function renderBrandsGrid() {
+        const grid = document.getElementById('brandsGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        
+        const allBrands = Object.keys(secretCodesByBrand);
+        
+        allBrands.forEach(brandName => {
+            const card = document.createElement('div');
+            card.className = 'brand-card';
+            
+            // Just use a generic icon and brand text
+            card.innerHTML = `
+                <i class="fas fa-mobile-alt"></i>
+                <span>${brandName}</span>
+            `;
+            
+            card.addEventListener('click', () => showBrandCodes(brandName));
+            grid.appendChild(card);
+        });
+    }
+
+    function showBrandCodes(brandName) {
+        document.getElementById('brandsGrid').style.display = 'none';
+        document.getElementById('brandCodesSection').style.display = 'block';
+        document.getElementById('brandTitle').innerText = brandName + " Secret Codes";
+        
+        const codesToRender = secretCodesByBrand[brandName] || [];
+        renderCodeList('androidCodesContainer', codesToRender, false);
+    }
+
+    // Attach back button logic
+    const backBtn = document.getElementById('backToBrandsBtn');
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            document.getElementById('brandCodesSection').style.display = 'none';
+            document.getElementById('brandsGrid').style.display = 'grid';
+        });
     }
 
     loadAllStaticCodes();
@@ -430,6 +512,7 @@ function renderTricks() {
     renderDeviceInfo();
     // Render tricks initially so the Tricks panel has content on load
     renderTricks();
+    renderBrandsGrid();
 
 // Hamburger toggle for small screens
 const hamburgerBtn = document.getElementById('hamburgerBtn');

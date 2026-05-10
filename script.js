@@ -52,6 +52,9 @@ const secretCodesByBrand = {
         { code: "*234#", desc: "MPESA Customer Service", compatible: "Safaricom Kenya" },
         { code: "*456#", desc: "Safaricom General Services", compatible: "Safaricom Kenya" },
         { code: "*544#", desc: "Safaricom Bundles", compatible: "Safaricom Kenya" },
+        { code: "*131#", desc: "Credit Loan", compatible: "Safaricom Kenya" },
+        { code: "*450#", desc: "Data Balance", compatible: "Safaricom Kenya" },
+        { code: "*130*num#", desc: "Call me back", compatible: "Safaricom Kenya" },
         
         // Airtel & Telkom
         { code: "*100#", desc: "Airtel Kenya Prepaid Menu", compatible: "Airtel Kenya" },
@@ -72,6 +75,8 @@ const secretCodesByBrand = {
         { code: "*901#", desc: "Access Bank", compatible: "Banking" },
         { code: "*737#", desc: "GTB Bank", compatible: "Banking" },
         { code: "*894#", desc: "FirstBank", compatible: "Banking" },
+        { code: "*325#", desc: "Family Bank", compatible: "Banking" },
+        { code: "*224#", desc: "Absa Bank", compatible: "Banking" },
         
         // General Android Codes
         { code: "*#06#", desc: "IMEI Number", compatible: "General Android" },

@@ -410,6 +410,9 @@ function renderTricks() {
                 if (activePane) activePane.classList.add('active-pane');
                 if (tabId === 'deviceTab') renderDeviceInfo();
                 if (tabId === 'tricksTab') renderTricks();
+                
+                // Scroll back to the top smoothly so the user starts reading the new tab from the top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
     }

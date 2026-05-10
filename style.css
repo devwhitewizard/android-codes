@@ -51,9 +51,14 @@
             border-radius: 60px;
             display: inline-block;
         }
-        /* nav-wrapper holds topbar + tabs-nav so dropdown appears right below the button */
+        /* nav-wrapper acts as a sticky header, containing topbar + tabs-nav */
         .nav-wrapper {
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            background: linear-gradient(145deg, #f0f4fa 0%, #e6edf4 100%);
+            margin-top: -1.5rem;
+            padding-top: 1.5rem;
             margin-bottom: 0;
         }
         /* topbar and hamburger for small screens */
@@ -115,20 +120,27 @@
 
         .tabs-nav {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
+            flex-wrap: nowrap; /* keep it on one row */
+            overflow-x: auto; /* allow horizontal scroll if needed */
+            gap: 0.5rem; /* smaller gap */
+            margin-bottom: 1.5rem;
             border-bottom: 2px solid rgba(30, 111, 159, 0.2);
-            padding-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
             justify-content: center;
+            /* hide scrollbar */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .tabs-nav::-webkit-scrollbar {
+            display: none;
         }
         .tab-btn {
             background: transparent;
             border: none;
             font-family: 'Inter', monospace;
             font-weight: 600;
-            font-size: 1rem;
-            padding: 0.7rem 1.4rem;
+            font-size: 0.85rem; /* Smaller text */
+            padding: 0.5rem 1rem; /* Smaller padding */
             border-radius: 40px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -136,6 +148,7 @@
             background: #ffffffcc;
             backdrop-filter: blur(4px);
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            white-space: nowrap; /* Don't squish words inside button */
         }
         .tab-btn i {
             margin-right: 8px;

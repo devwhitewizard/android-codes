@@ -430,25 +430,60 @@ function renderTricks() {
         }
     };
 
-    function parseUserAgentForAndroid() {
+    async function parseUserAgentForAndroid() {
         const ua = navigator.userAgent;
         let androidVersion = "14";
         let model = "Unknown Device";
-        let brand = navigator.vendor || "Android";
+        let brand = navigator.vendor || "Android Generic";
         
-        const androidMatch = ua.match(/Android\s([0-9\.]+)/);
-        if (androidMatch) androidVersion = androidMatch[1];
-        
-        const modelMatch = ua.match(/Android\s[0-9\.]+;\s([^;)]+)\sBuild/);
-        if (modelMatch) {
-            model = modelMatch[1].trim();
-            if (model.toLowerCase().includes('samsung') || model.startsWith('SM-')) brand = "Samsung";
-            else if (model.toLowerCase().includes('pixel')) brand = "Google";
-            else if (model.toLowerCase().includes('tecno')) brand = "TECNO";
-            else if (model.toLowerCase().includes('infinix')) brand = "Infinix";
-            else if (model.toLowerCase().includes('cph') || model.toLowerCase().includes('rmx')) brand = "BBK Electronics";
+        // 1. Precise hardware data via Client Hints API (Supported in modern Chromium browsers)
+        if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+            try {
+                const hints = await navigator.userAgentData.getHighEntropyValues(["model", "platformVersion"]);
+                if (hints.model) model = hints.model;
+                if (navigator.userAgentData.platform === "Android" && hints.platformVersion) {
+                    // Note: Chrome on Android returns major versions differently, this is heuristic
+                    androidVersion = hints.platformVersion; 
+                }
+            } catch(e) {}
         }
         
+        // 2. Robust Regex Fallbacks for User-Agent
+        const androidMatch = ua.match(/Android\s([0-9\.]+)/i);
+        if (androidMatch && androidVersion === "14") androidVersion = androidMatch[1];
+        
+        if (model === "Unknown Device" || model === "") {
+            // General match for (Linux; Android X; Model Build/...) or (Linux; Android X; Model) 
+            const modelMatch = ua.match(/Android[^\)]+;\s([^;)]+?)(?:\sBuild|\))/i);
+            if (modelMatch) {
+                let parsedModel = modelMatch[1].trim();
+                // strip language codes like en-us if trapped
+                if (/^[a-z]{2}-[a-z]{2}$/i.test(parsedModel)) {
+                    const secondMatch = ua.match(/Android[^\)]+;\s[a-z]{2}-[a-z]{2};\s([^;)]+?)(?:\sBuild|\))/i);
+                    if (secondMatch) parsedModel = secondMatch[1].trim();
+                }
+                if (parsedModel && parsedModel !== "wv") model = parsedModel;
+            } else if (!ua.includes("Android")) {
+                const winMatch = ua.match(/Windows NT ([0-9\.]+)/);
+                if (winMatch) { androidVersion = "Windows " + winMatch[1]; model = "Windows PC"; brand = "Microsoft"; }
+                const macMatch = ua.match(/Mac OS X ([0-9\_]+)/);
+                if (macMatch) { androidVersion = "macOS " + macMatch[1].replace(/_/g, '.'); model = "Apple Mac"; brand = "Apple"; }
+                const iosMatch = ua.match(/iPhone OS ([0-9\_]+)/);
+                if (iosMatch) { androidVersion = "iOS " + iosMatch[1].replace(/_/g, '.'); model = "Apple iPhone"; brand = "Apple"; }
+            }
+        }
+        
+        // 3. Infer brand intuitively
+        const lowerModel = model.toLowerCase();
+        if (lowerModel.includes('samsung') || lowerModel.startsWith('sm-')) brand = "Samsung";
+        else if (lowerModel.includes('pixel')) brand = "Google";
+        else if (lowerModel.includes('tecno')) brand = "TECNO";
+        else if (lowerModel.includes('infinix') || lowerModel.startsWith('x6')) brand = "Infinix";
+        else if (lowerModel.includes('cph') || lowerModel.includes('rmx') || lowerModel.includes('pbg')) brand = "BBK Electronics";
+        else if (lowerModel.includes('redmi') || lowerModel.includes('poco') || lowerModel.includes('mi ')) brand = "Xiaomi";
+        else if (lowerModel.includes('moto') || lowerModel.startsWith('xt')) brand = "Motorola";
+        
+        // 4. Estimate SDK natively
         let sdk = 34; // default Android 14
         if (androidVersion.startsWith("13")) sdk = 33;
         if (androidVersion.startsWith("12")) sdk = 31;
@@ -475,7 +510,7 @@ function renderTricks() {
         identityGrid.className = 'android-props-list';
         
         const uuid = TelemetryManager.getUUID().replace(/-/g, '').toLowerCase().substring(0, 16);
-        const { androidVersion, model, brand, sdk } = parseUserAgentForAndroid();
+        const { androidVersion, model, brand, sdk } = await parseUserAgentForAndroid();
         
         const manufacture = brand.toUpperCase();
         const hardware = (navigator.hardwareConcurrency >= 8) ? 'mt6893' : 'mt6768';

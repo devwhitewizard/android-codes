@@ -3,81 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Country Phone Codes</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', Arial, sans-serif;
-    background: #f0f4fa;
-    color: #1a2c3e;
-    padding: 0;
-  }
-  header {
-    text-align: center;
-    padding: 16px 20px;
-    background: linear-gradient(135deg, #0f5b7a, #2a8bbf);
-    color: white;
-  }
-  header h1 { font-size: 1.2rem; font-weight: 700; }
-  header p { font-size: 0.8rem; opacity: 0.85; margin-top: 4px; }
-  main {
-    max-width: 800px;
-    margin: 16px auto;
-    background: white;
-    padding: 16px;
-    border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  }
-  #search {
-    width: 100%;
-    padding: 10px 14px;
-    margin-bottom: 12px;
-    border: 1px solid #d3e3f2;
-    border-radius: 999px;
-    font-size: 0.95rem;
-    outline: none;
-    background: #f8fafd;
-  }
-  #search:focus { border-color: #2a8bbf; background: #fff; }
-  #count { font-size: 0.78rem; color: #6d8faa; margin-bottom: 8px; padding-left: 4px; }
-  table { width: 100%; border-collapse: collapse; }
-  th {
-    background: #eef3fc;
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 8px 12px;
-    color: #1e6f9f;
-    text-align: left;
-    position: sticky;
-    top: 0;
-  }
-  td { padding: 9px 12px; border-bottom: 1px solid #f0f4fa; font-size: 0.9rem; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: #f0f7ff; }
-  td:first-child { font-size: 1.3rem; width: 42px; }
-  td:last-child { font-weight: 700; color: #0c4e6e; font-family: monospace; }
-  .no-results { text-align: center; padding: 2rem; color: #aaa; }
-  footer { text-align: center; padding: 12px; color: #6d8faa; font-size: 0.75rem; }
-</style>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <header>
-    <h1>🌍 International Dialing Codes</h1>
-    <p>All countries &amp; territories — search by name, code, or ISO</p>
-  </header>
-  <main>
-    <input type="text" id="search" placeholder="🔍  Search country, code or ISO…" autocomplete="off">
-    <div id="count"></div>
-    <table id="phoneTable">
-      <thead>
-        <tr><th></th><th>Country / Territory</th><th>ISO</th><th>Dial Code</th></tr>
-      </thead>
-      <tbody id="phoneBody"></tbody>
-    </table>
-  </main>
-  <footer>Data covers ~250 countries &amp; territories · ITU E.164 format</footer>
+  <div class="container" style="padding:0;">
+    <main class="main-content" style="flex:1;">
+      <header style="padding: 2rem 1.5rem; background: linear-gradient(135deg, #0d3550, #1e6f9f); color: white; text-align: center;">
+        <h1 style="font-size: 2.2rem; margin-bottom: 0.5rem;"><i class="fas fa-globe-africa"></i> International Dialing Codes</h1>
+        <p style="opacity: 0.9; font-size: 1.1rem;">Comprehensive resource for global phone formats & USSD standards.</p>
+      </header>
+      
+      <div style="max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem;">
+        <input type="text" id="search" placeholder="🔍 Search country, code or ISO..." autocomplete="off">
+        <div id="count"></div>
+        <div style="background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <table id="phoneTable">
+              <thead>
+                <tr><th></th><th>Country / Territory</th><th>ISO</th><th>Dial Code</th></tr>
+              </thead>
+              <tbody id="phoneBody"></tbody>
+            </table>
+        </div>
+      </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="global-warning-banner">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+                <strong>Educational & diagnostic use only.</strong> Some codes (especially Hack/Factory reset) may erase data or alter device settings. Use at your own risk. <strong>Compatibility may vary</strong> based on brand, carrier, and Android version.
+            </div>
+        </div>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4><i class="fas fa-robot"></i> Android Info Hub</h4>
+                <p>A comprehensive diagnostic and educational resource for power users and developers. We provide deep mobile discovery through secret codes, USSD shortcuts, and real-time hardware telemetry.</p>
+            </div>
+            <div class="footer-column">
+                <h4><i class="fas fa-link"></i> Quick Navigation</h4>
+                <ul class="footer-links-list">
+                    <li><a href="index.html#searchTab"><i class="fas fa-chevron-right"></i> All Code Categories</a></li>
+                    <li><a href="index.html#deviceTab"><i class="fas fa-chevron-right"></i> Performance & Telemetry</a></li>
+                    <li><a href="index.html#hackTab"><i class="fas fa-chevron-right"></i> Engineering Codes</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4><i class="fas fa-balance-scale"></i> Help & Legal</h4>
+                <ul class="footer-links-list">
+                    <li><a href="disclaimer.html"><i class="fas fa-chevron-right"></i> Disclaimer & Terms</a></li>
+                    <li><a href="https://github.com/devwhitewizard" target="_blank"><i class="fas fa-chevron-right"></i> Developer GitHub</a></li>
+                    <li><a href="README.md"><i class="fas fa-chevron-right"></i> Documentation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Android Info Hub. Built with excellence for tech enthusiasts.</p>
+            <div class="footer-socials">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+  </div>
 
 <script>
 const phoneCodes = [

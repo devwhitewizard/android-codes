@@ -484,6 +484,28 @@
             color: #1e6f9f;
         }
 
+        .global-warning-banner {
+            background-color: #fff8d6;
+            border-left: 5px solid #f39c12;
+            padding: 12px 16px;
+            margin: 0 auto 2.5rem auto;
+            border-radius: 6px;
+            color: #333;
+            max-width: 1200px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .global-warning-banner i {
+            color: #f39c12;
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
         /* Responsive Footer */
         @media (max-width: 768px) {
             .footer-grid {

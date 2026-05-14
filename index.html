@@ -112,26 +112,59 @@
 
     <div id="deviceTab" class="tab-pane">
         <div class="info-panel">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                <h3><i class="fas fa-microphone-alt"></i> Live Device Telemetry</h3>
-                <button class="refresh-btn" id="refreshDeviceInfo"><i class="fas fa-sync-alt"></i> Refresh data</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                <h3><i class="fas fa-tachometer-alt"></i> On-Device Telemetry Dashboard</h3>
+                <button class="refresh-btn" id="refreshDeviceInfo"><i class="fas fa-sync-alt"></i> Run Diagnostics</button>
             </div>
-            <div id="deviceInfoGrid" class="info-grid"></div>
-            <div style="font-size: 0.75rem; margin-top: 1rem; background:#eef2fa; border-radius: 20px; padding: 0.8rem;">
-                <i class="fas fa-info-circle"></i> Parameters based on browser APIs: battery, network, memory, hardware concurrency.
+
+            <!-- 1. Identity & Core Info -->
+            <div class="telemetry-section">
+                <h4><i class="fas fa-fingerprint"></i> 1. Device Identity & Core Info</h4>
+                <div id="identityGrid" class="info-grid"></div>
+            </div>
+
+            <!-- 2. Hardware Health & Performance -->
+            <div class="telemetry-section">
+                <h4><i class="fas fa-heartbeat"></i> 2. Hardware Health & Resource Metrics</h4>
+                <div id="healthGrid" class="info-grid"></div>
+            </div>
+
+            <!-- 3. Connectivity & Environment -->
+            <div class="telemetry-section">
+                <h4><i class="fas fa-wifi"></i> 3. Connectivity & Environment</h4>
+                <div id="connectivityGrid" class="info-grid"></div>
+            </div>
+
+            <!-- 4. Software & Application Metrics -->
+            <div class="telemetry-section">
+                <h4><i class="fas fa-box-open"></i> 4. Software & Application Metrics</h4>
+                <div id="softwareGrid" class="info-grid"></div>
+            </div>
+
+            <!-- 5. Security & Proactive Monitoring -->
+            <div class="telemetry-section">
+                <h4><i class="fas fa-shield-alt"></i> 5. Security & Events</h4>
+                <div class="security-log-container">
+                    <div id="securityLog" class="security-log"></div>
+                </div>
+            </div>
+
+            <div style="font-size: 0.75rem; margin-top: 1.5rem; background:#eef2fa; border-radius: 20px; padding: 1rem; border-left: 4px solid #1e6f9f;">
+                <i class="fas fa-info-circle"></i> <strong>Telemetry Source:</strong> Data gathered via Navigator, Performance, and Battery Status APIs. Some lower-level hardware parameters are estimated or simulated for diagnostic demonstration.
             </div>
         </div>
     </div>
 
     <footer class="main-footer">
-        <div class="footer-disclaimer">
-            <h4><i class="fas fa-exclamation-circle"></i> Disclaimer &amp; Terms of Use</h4>
-            <p><strong>Educational &amp; Diagnostic Use Only:</strong> The codes and tricks provided in this application are for informational, educational, and diagnostic purposes. They are intended for advanced users and developers.</p>
-            <p><strong>Use at Your Own Risk:</strong> Certain codes (especially those in the "Hack / Engineering" section, such as Factory or Hard Reset codes) will completely wipe your device data, modify radio network parameters, or alter system settings permanently. We hold no responsibility for any data loss, device bricking, or system instability that may occur from using these codes.</p>
-            <p><strong>Device Compatibility:</strong> Not all codes work on all Android devices. Code execution depends on the device manufacturer, Android version, firmware build, and cellular carrier restrictions. Proceed with caution.</p>
+        <div class="footer-disclaimer" style="margin-bottom: 1.5rem; background: #eef2fa; border-left-color: #1e6f9f;">
+            <h4><i class="fas fa-info-circle"></i> About Android Info Hub</h4>
+            <p><strong>Android Info Hub</strong> is a comprehensive diagnostic and educational resource for Android power users and developers. Our mission is to provide a central, accessible repository for "deep" mobile discovery—including secret dialer codes, USSD carrier shortcuts, hidden engineering menus, and real-time device telemetry. Built with a focus on performance and usability, it empowers users to understand and optimize their mobile hardware through transparent data and expert tips.</p>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 Android Info Hub. Built for developers &amp; tech enthusiasts.</p>
+            <div class="footer-links">
+                <a href="disclaimer.html" class="legal-link"><i class="fas fa-balance-scale"></i> Disclaimer &amp; Terms of Use</a>
+            </div>
         </div>
     </footer>
 </div>
@@ -139,45 +172,8 @@
 
 <script src="script.js"></script>
 
-<style>
-  .hero-typewriter-line {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0.9rem;
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    min-height: 2rem;
-  }
-  .hero-typed {
-    animation: colorCycle 3s linear infinite;
-  }
-  @keyframes colorCycle {
-    0%   { color: #1e6f9f; }
-    14%  { color: #9b27af; }
-    28%  { color: #e67e22; }
-    42%  { color: #27ae60; }
-    57%  { color: #e74c3c; }
-    71%  { color: #2980b9; }
-    85%  { color: #f39c12; }
-    100% { color: #1e6f9f; }
-  }
-  .hero-cursor {
-    display: inline-block;
-    color: #2a8bbf;
-    font-weight: 200;
-    font-size: 1.3rem;
-    animation: cursorBlink 0.75s step-end infinite;
-    margin-left: 2px;
-  }
-  @keyframes cursorBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-</style>
-
 <script>
+    // Typewriter effect for hero section   
 (function () {
   const phrases = [
     "Secret codes",

@@ -11,6 +11,43 @@
             padding: 1.5rem 1rem 3rem;
             min-height: 100vh;
         }
+    /*typewriter effect styling*/
+    .hero-typewriter-line {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0.9rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        min-height: 2rem;
+    }
+    .hero-typed {
+        animation: colorCycle 3s linear infinite;
+    }
+    @keyframes colorCycle {
+        0%   { color: #1e6f9f; }
+        14%  { color: #9b27af; }
+        28%  { color: #e67e22; }
+        42%  { color: #27ae60; }
+        57%  { color: #e74c3c; }
+        71%  { color: #2980b9; }
+        85%  { color: #f39c12; }
+        100% { color: #1e6f9f; }
+    }
+    .hero-cursor {
+        display: inline-block;
+        color: #2a8bbf;
+        font-weight: 200;
+        font-size: 1.3rem;
+        animation: cursorBlink 0.75s step-end infinite;
+        margin-left: 2px;
+    }
+    @keyframes cursorBlink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    /*--end of styling*/    
 
         .container {
             max-width: 1300px;
@@ -387,14 +424,99 @@
             color: #0d3550;
         }
         .refresh-btn {
-            background: #eef2f7;
+            background: #1e6f9f;
+            color: white;
             border: none;
-            padding: 8px 20px;
+            padding: 10px 24px;
             border-radius: 40px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
-            margin-top: 12px;
+            box-shadow: 0 4px 12px rgba(30,111,159,0.2);
+        }
+        .refresh-btn:hover {
+            background: #15557a;
+            transform: translateY(-2px);
+        }
+
+        /* TELEMETRY DASHBOARD STYLES */
+        .telemetry-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e1eaf3;
+        }
+        .telemetry-section:last-child {
+            border-bottom: none;
+        }
+        .telemetry-section h4 {
+            font-size: 1rem;
+            color: #1a2c3e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+        .telemetry-section h4 i {
+            color: #1e6f9f;
+        }
+
+        /* Progress bars for metrics */
+        .metric-progress-wrapper {
+            margin-top: 8px;
+            width: 100%;
+        }
+        .metric-progress-bar {
+            height: 6px;
+            background: #e1eaf3;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .metric-progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .fill-green { background: linear-gradient(90deg, #2ecc71, #27ae60); }
+        .fill-yellow { background: linear-gradient(90deg, #f1c40f, #f39c12); }
+        .fill-red { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+        .fill-blue { background: linear-gradient(90deg, #3498db, #2980b9); }
+
+        /* Security Log Styles */
+        .security-log-container {
+            background: #1c262f;
+            border-radius: 16px;
+            padding: 1rem;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid #2c3e50;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .security-log {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: #a5b1c2;
+        }
+        .log-entry {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 4px;
+            border-bottom: 1px solid #2d3436;
+            padding-bottom: 4px;
+        }
+        .log-timestamp { color: #4b6584; white-space: nowrap; }
+        .log-level { font-weight: 700; width: 60px; flex-shrink: 0; }
+        .level-info { color: #45aaf2; }
+        .level-success { color: #26de81; }
+        .level-warning { color: #fed330; }
+        .level-error { color: #eb3b5a; }
+        .log-msg { color: #d1d8e0; }
+
+        .info-grid {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
         /* BRANDS GRID STYLES */
@@ -571,4 +693,25 @@
             opacity: 0;
             transition: 0.2s;
             pointer-events: none;
+        }
+
+        .legal-link {
+            color: #1e6f9f;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: color 0.2s;
+            border-bottom: 1px dashed transparent;
+        }
+        .legal-link:hover {
+            color: #0d3550;
+            border-bottom-color: #0d3550;
+        }
+        .footer-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
         }

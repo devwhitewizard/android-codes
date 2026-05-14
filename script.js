@@ -442,8 +442,18 @@ function renderTricks() {
                 const hints = await navigator.userAgentData.getHighEntropyValues(["model", "platformVersion"]);
                 if (hints.model) model = hints.model;
                 if (navigator.userAgentData.platform === "Android" && hints.platformVersion) {
-                    // Note: Chrome on Android returns major versions differently, this is heuristic
                     androidVersion = hints.platformVersion; 
+                } else if (navigator.userAgentData.platform === "Windows" && hints.platformVersion) {
+                    const majorVersion = parseInt(hints.platformVersion.split('.')[0], 10);
+                    if (majorVersion >= 13) {
+                        androidVersion = "Windows 11";
+                        model = "Windows PC";
+                        brand = "Microsoft";
+                    } else {
+                        androidVersion = "Windows 10";
+                        model = "Windows PC";
+                        brand = "Microsoft";
+                    }
                 }
             } catch(e) {}
         }
@@ -465,7 +475,8 @@ function renderTricks() {
                 if (parsedModel && parsedModel !== "wv") model = parsedModel;
             } else if (!ua.includes("Android")) {
                 const winMatch = ua.match(/Windows NT ([0-9\.]+)/);
-                if (winMatch) { androidVersion = "Windows " + winMatch[1]; model = "Windows PC"; brand = "Microsoft"; }
+                // Only overwrite if Client Hints didn't already catch Win 11
+                if (winMatch && !androidVersion.startsWith("Windows 11")) { androidVersion = "Windows " + winMatch[1]; model = "Windows PC"; brand = "Microsoft"; }
                 const macMatch = ua.match(/Mac OS X ([0-9\_]+)/);
                 if (macMatch) { androidVersion = "macOS " + macMatch[1].replace(/_/g, '.'); model = "Apple Mac"; brand = "Apple"; }
                 const iosMatch = ua.match(/iPhone OS ([0-9\_]+)/);
@@ -488,7 +499,7 @@ function renderTricks() {
         if (androidVersion.startsWith("13")) sdk = 33;
         if (androidVersion.startsWith("12")) sdk = 31;
         if (androidVersion.startsWith("11")) sdk = 30;
-        if (androidVersion.startsWith("10")) sdk = 29;
+        if (androidVersion.startsWith("10") || androidVersion.startsWith("Windows") || androidVersion.startsWith("macOS") || androidVersion.startsWith("iOS")) sdk = 29;
 
         return { androidVersion, model, brand, sdk };
     }
@@ -511,13 +522,15 @@ function renderTricks() {
         
         const uuid = TelemetryManager.getUUID().replace(/-/g, '').toLowerCase().substring(0, 16);
         const { androidVersion, model, brand, sdk } = await parseUserAgentForAndroid();
+        const battery = await TelemetryManager.getBattery();
         
         const manufacture = brand.toUpperCase();
         const hardware = (navigator.hardwareConcurrency >= 8) ? 'mt6893' : 'mt6768';
         const display = `${model.toUpperCase()}-X${Math.floor(Math.random()*10000)}ABCDEFGHIJKLMNOPQRSTUVWXYZ-${Math.floor(Math.random()*100000)}V2222`;
         
         const identityItems = [
-            { label: "Operating System", value: navigator.platform },
+            { label: "Operating System", value: androidVersion.startsWith("Win") || androidVersion.startsWith("mac") || androidVersion.startsWith("iOS") ? androidVersion : "Android " + androidVersion },
+            { label: "Battery", value: battery ? `${battery.level}% (${battery.charging ? 'Charging ⚡' : 'Discharging'})` : 'Unknown' },
             { label: "Brand", value: manufacture },
             { label: "Device ID", value: uuid },
             { label: "Model", value: model },

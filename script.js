@@ -272,6 +272,21 @@ function renderTricks() {
             const actionsDiv = document.createElement('div');
             actionsDiv.className = 'card-actions';
 
+            // Warning expandable area
+            const warningExpandedDiv = document.createElement('div');
+            warningExpandedDiv.className = 'warning-expanded';
+            warningExpandedDiv.style.display = 'none';
+            warningExpandedDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Educational & diagnostic use only. Some codes (especially Hack/Factory reset) may erase data or alter device settings. Use at your own risk. Compatibility may vary based on brand, carrier, and Android version.';
+
+            // Warning button
+            const warningBtn = document.createElement('button');
+            warningBtn.className = 'action-btn';
+            warningBtn.setAttribute('aria-label', 'Warning');
+            warningBtn.innerHTML = '<i class="fas fa-exclamation-triangle" style="color: #d93025;"></i>';
+            warningBtn.addEventListener('click', () => {
+                warningExpandedDiv.style.display = warningExpandedDiv.style.display === 'none' ? 'block' : 'none';
+            });
+
             // Like button — persists in localStorage
             const likeKey = 'like_' + item.code;
             let liked = localStorage.getItem(likeKey) === '1';
@@ -328,9 +343,11 @@ function renderTricks() {
             actionsDiv.appendChild(likeBtn);
             actionsDiv.appendChild(shareBtn);
             actionsDiv.appendChild(copyButton);
+            actionsDiv.appendChild(warningBtn);
 
             card.appendChild(codeInfoDiv);
             card.appendChild(actionsDiv);
+            card.appendChild(warningExpandedDiv);
             container.appendChild(card);
         });
     }

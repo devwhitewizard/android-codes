@@ -624,6 +624,38 @@
         .telemetry-section h4 i {
             color: #1e6f9f;
         }
+        
+        /* Native Android Device Info Rows */
+        .android-props-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 1rem;
+            padding-bottom: 2rem;
+        }
+        .device-info-row {
+            background: #f0f2f5;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        .device-info-label {
+            font-size: 1.05rem;
+            color: #111;
+            white-space: nowrap;
+        }
+        .device-info-value {
+            font-size: 0.9rem;
+            color: #333;
+            text-align: right;
+            word-break: break-all;
+            /* Allow long values to wrap perfectly and not break the pill flexbox */
+            max-width: 65%;
+            line-height: 1.4;
+        }
 
         /* Progress bars for metrics */
         .metric-progress-wrapper {

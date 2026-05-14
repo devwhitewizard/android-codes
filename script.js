@@ -430,6 +430,34 @@ function renderTricks() {
         }
     };
 
+    function parseUserAgentForAndroid() {
+        const ua = navigator.userAgent;
+        let androidVersion = "14";
+        let model = "Unknown Device";
+        let brand = navigator.vendor || "Android";
+        
+        const androidMatch = ua.match(/Android\s([0-9\.]+)/);
+        if (androidMatch) androidVersion = androidMatch[1];
+        
+        const modelMatch = ua.match(/Android\s[0-9\.]+;\s([^;)]+)\sBuild/);
+        if (modelMatch) {
+            model = modelMatch[1].trim();
+            if (model.toLowerCase().includes('samsung') || model.startsWith('SM-')) brand = "Samsung";
+            else if (model.toLowerCase().includes('pixel')) brand = "Google";
+            else if (model.toLowerCase().includes('tecno')) brand = "TECNO";
+            else if (model.toLowerCase().includes('infinix')) brand = "Infinix";
+            else if (model.toLowerCase().includes('cph') || model.toLowerCase().includes('rmx')) brand = "BBK Electronics";
+        }
+        
+        let sdk = 34; // default Android 14
+        if (androidVersion.startsWith("13")) sdk = 33;
+        if (androidVersion.startsWith("12")) sdk = 31;
+        if (androidVersion.startsWith("11")) sdk = 30;
+        if (androidVersion.startsWith("10")) sdk = 29;
+
+        return { androidVersion, model, brand, sdk };
+    }
+
     async function renderTelemetry() {
         const identityGrid = document.getElementById('identityGrid');
         const healthGrid = document.getElementById('healthGrid');
@@ -438,98 +466,57 @@ function renderTricks() {
         const securityLog = document.getElementById('securityLog');
 
         if (!identityGrid) return;
-
-        // Show loading state
-        [identityGrid, healthGrid, connectivityGrid, softwareGrid].forEach(g => {
-            if(g) g.innerHTML = '<div class="info-item"><div class="info-label">Scanning...</div></div>';
-        });
-
-        // 1. Identity & Core
-        const uuid = TelemetryManager.getUUID();
-        const identityItems = [
-            { label: "Unique Device ID", value: uuid },
-            { label: "Device Brand/Label", value: navigator.vendor || "Android Generic" },
-            { label: "Operating System", value: navigator.platform },
-            { label: "User Agent", value: navigator.userAgent.split(' ')[0] + "..." },
-            { label: "Hardware Version", value: "Rev 2.1 (ARM64)" }
-        ];
-        renderGridItems(identityGrid, identityItems);
-
-        // 2. Health & Performance
-        const battery = await TelemetryManager.getBattery();
-        const storage = await TelemetryManager.getStorage();
-        const cpuCores = navigator.hardwareConcurrency || 'N/A';
-        const ram = navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'N/A';
         
-        const healthItems = [
-            { label: "CPU Utilization", value: "7% (Idle)", progress: 7, color: 'blue' },
-            { label: "Memory (RAM) Usage", value: `${ram} available`, progress: 12, color: 'green' },
-            { label: "Disk Usage", value: `${storage.used}MB / ${storage.total}MB`, progress: storage.percent, color: 'yellow' },
-            { label: "Battery Level", value: `${battery.level}% (${battery.charging ? 'Charging' : 'Discharging'})`, progress: battery.level, color: battery.level > 20 ? 'green' : 'red' },
-            { label: "Device Temperature", value: "34°C (Normal)", progress: 34, color: 'green' }
+        // Hide the other grids as per screenshot style
+        if (healthGrid) healthGrid.parentElement.style.display = 'none';
+        if (connectivityGrid) connectivityGrid.parentElement.style.display = 'none';
+        if (softwareGrid) softwareGrid.parentElement.style.display = 'none';
+        
+        identityGrid.className = 'android-props-list';
+        
+        const uuid = TelemetryManager.getUUID().replace(/-/g, '').toLowerCase().substring(0, 16);
+        const { androidVersion, model, brand, sdk } = parseUserAgentForAndroid();
+        
+        const manufacture = brand.toUpperCase();
+        const hardware = (navigator.hardwareConcurrency >= 8) ? 'mt6893' : 'mt6768';
+        const display = `${model.toUpperCase()}-X${Math.floor(Math.random()*10000)}ABCDEFGHIJKLMNOPQRSTUVWXYZ-${Math.floor(Math.random()*100000)}V2222`;
+        
+        const identityItems = [
+            { label: "Operating System", value: navigator.platform },
+            { label: "Brand", value: manufacture },
+            { label: "Device ID", value: uuid },
+            { label: "Model", value: model },
+            { label: "ID", value: "UP1A." + Math.floor(Math.random()*1000000) + ".00" + Math.floor(Math.random()*10) },
+            { label: "SDK", value: sdk },
+            { label: "Manufacture", value: manufacture },
+            { label: "User", value: "buildsrv-ci" },
+            { label: "Type", value: "user" },
+            { label: "Base", value: "1" },
+            { label: "Incremental", value: Math.floor(Math.random()*100000) + "V2222" },
+            { label: "Board", value: manufacture + "-BOARD" },
+            { label: "Host", value: "srv" + Math.floor(Math.random()*100000) + "-0910" },
+            { label: "Display", value: display },
+            { label: "Hardware", value: hardware },
+            { label: "Product", value: model.replace(/\s+/g, '') + "-OP" },
+            { label: "CPU ABI", value: "arm64-v8a" },
+            { label: "Finger Print", value: `${manufacture}/${model.replace(/\s+/g, '')}-OP/${manufacture}-14/UP1A.231005.007/250910V2222:user/release-keys` },
+            { label: "Version", value: androidVersion }
         ];
-        renderGridItems(healthGrid, healthItems);
-
-        // 3. Connectivity
-        const conn = TelemetryManager.getConnectivity();
-        const connectivityItems = [
-            { label: "Network Type", value: conn.type.toUpperCase() },
-            { label: "Signal Strength", value: "Excellent (-65 dBm)" },
-            { label: "Downlink Speed", value: `${conn.speed} Mbps` },
-            { label: "Latency (RTT)", value: `${conn.rtt} ms` },
-            { label: "Network Group", value: conn.online }
-        ];
-        renderGridItems(connectivityGrid, connectivityItems);
-
-        // 4. Software Metrics
-        const softwareItems = [
-            { label: "System Version", value: "Android Build 14.2.A" },
-            { label: "Security Patch", value: "2026-05-01" },
-            { label: "Core Services", value: "8/8 Running" },
-            { label: "Config Sync", value: "Active (2m ago)" }
-        ];
-        renderGridItems(softwareGrid, softwareItems);
-
-        // 5. Security Logs
-        const logs = TelemetryManager.getSecurityEvents();
-        securityLog.innerHTML = '';
-        logs.forEach(log => {
-            const entry = document.createElement('div');
-            entry.className = 'log-entry';
-            entry.innerHTML = `
-                <span class="log-timestamp">[${log.time}]</span>
-                <span class="log-level level-${log.level}">${log.level.toUpperCase()}</span>
-                <span class="log-msg">${log.msg}</span>
+        
+        identityGrid.innerHTML = '';
+        identityItems.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'device-info-row';
+            div.innerHTML = `
+                <div class="device-info-label">${item.label}</div>
+                <div class="device-info-value">${item.value}</div>
             `;
-            securityLog.appendChild(entry);
+            identityGrid.appendChild(div);
         });
     }
 
-    function renderGridItems(container, items) {
-        if (!container) return;
-        container.innerHTML = '';
-        items.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'info-item';
-            
-            let progressHtml = '';
-            if (item.progress !== undefined) {
-                progressHtml = `
-                    <div class="metric-progress-wrapper">
-                        <div class="metric-progress-bar">
-                            <div class="metric-progress-fill fill-${item.color || 'blue'}" style="width: ${item.progress}%"></div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            div.innerHTML = `
-                <div class="info-label">${item.label}</div>
-                <div class="info-value">${item.value || '—'}</div>
-                ${progressHtml}
-            `;
-            container.appendChild(div);
-        });
+    function renderGridItems(container, items) { 
+        // unused fallback
     }
 
     // Replace older function refs

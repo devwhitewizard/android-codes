@@ -325,12 +325,32 @@ function renderTricks() {
                 copyToClipboard(item.code);
             });
 
+            // Warning drop-down toggle button
+            const warningBtn = document.createElement('button');
+            warningBtn.className = 'action-btn';
+            warningBtn.setAttribute('aria-label', 'Warning');
+            warningBtn.innerHTML = '<i class="fas fa-exclamation-triangle" style="color: #d93025;"></i>';
+
+            // Warning expanded text
+            const warningExpandedDiv = document.createElement('div');
+            warningExpandedDiv.className = 'warning-expanded';
+            warningExpandedDiv.style.display = 'none';
+            warningExpandedDiv.innerHTML = '<i class="fas fa-info-circle"></i> <strong>Educational & diagnostic use only.</strong> Some codes (especially Hack/Factory reset) may erase data or alter device settings. Use at your own risk. <strong>Compatibility may vary</strong> based on brand, carrier, and Android version.';
+
+            warningBtn.addEventListener('click', () => {
+                const isHidden = warningExpandedDiv.style.display === 'none';
+                warningExpandedDiv.style.display = isHidden ? 'block' : 'none';
+                warningBtn.style.background = isHidden ? '#ffe0e6' : '';
+            });
+
             actionsDiv.appendChild(likeBtn);
             actionsDiv.appendChild(shareBtn);
+            actionsDiv.appendChild(warningBtn);
             actionsDiv.appendChild(copyButton);
 
             card.appendChild(codeInfoDiv);
             card.appendChild(actionsDiv);
+            card.appendChild(warningExpandedDiv);
             container.appendChild(card);
         });
     }

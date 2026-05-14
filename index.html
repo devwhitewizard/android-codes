@@ -139,60 +139,9 @@
             <div class="telemetry-section">
                 <h4><i class="fas fa-box-open"></i> 4. Software & Application Metrics</h4>
                 <div id="softwareGrid" class="info-grid"></div>
+            </div>
+        </div>
     </div>
-
-    <!-- Main Content Area -->
-    <main class="main-content" style="flex: 1;">
-        <!-- Hero Section -->
-        <header class="hero-section">
-            <h1 id="heroTyped">Secret codes</h1>
-            <p>Master your Android device with hidden commands, USSD shortcuts, and real-time telemetry diagnostic tools.</p>
-        </header>
-
-        <!-- Search Bar -->
-        <div class="search-container">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" id="searchInput" placeholder="Search codes (e.g., *#06#, Battery, Camera)..." aria-label="Search codes">
-        </div>
-
-        <!-- Navigation Tabs -->
-        <nav class="nav-tabs">
-            <button class="nav-tab active" data-tab="searchTab"><i class="fas fa-th-list"></i> All Codes</button>
-            <button class="nav-tab" data-tab="deviceTab"><i class="fas fa-microchip"></i> Device Info & Telemetry</button>
-            <button class="nav-tab" data-tab="hackTab"><i class="fas fa-user-secret"></i> Hack / Engineering</button>
-        </nav>
-
-        <!-- Tab Panes -->
-        <div id="searchTab" class="tab-pane active-pane">
-            <div id="codesContainer" class="codes-grid"></div>
-        </div>
-
-        <div id="deviceTab" class="tab-pane">
-            <div id="deviceInfoContainer">
-                <div class="telemetry-header">
-                    <h2><i class="fas fa-radar"></i> Live Device Telemetry</h2>
-                    <button class="refresh-btn" onclick="renderTelemetry()"><i class="fas fa-sync-alt"></i> Run Diagnostics</button>
-                </div>
-                <!-- Telemetry Grids ... -->
-                <div id="telemetryGrid" class="telemetry-grid"></div>
-                <div id="securityLogArea"></div>
-                
-                <div style="font-size: 0.75rem; margin-top: 1.5rem; background:#eef2fa; border-radius: 20px; padding: 1rem; border-left: 4px solid #1e6f9f;">
-                    <i class="fas fa-info-circle"></i> <strong>Telemetry Source:</strong> Data gathered via Navigator, Performance, and Battery Status APIs. Some lower-level hardware parameters are estimated or simulated for diagnostic demonstration.
-                </div>
-            </div>
-        </div>
-
-        <div id="hackTab" class="tab-pane">
-            <div class="info-alert">
-                <i class="fas fa-exclamation-triangle"></i>
-                <div>
-                    <strong>Warning:</strong> Use engineering codes with extreme caution. Some may wipe data or alter radio settings.
-                </div>
-            </div>
-            <div id="hackCodesContainer" class="codes-grid"></div>
-        </div>
-    </main>
 
     <footer class="main-footer">
         <div class="global-warning-banner">
@@ -209,7 +158,7 @@
             <div class="footer-column">
                 <h4><i class="fas fa-link"></i> Quick Navigation</h4>
                 <ul class="footer-links-list">
-                    <li><a href="javascript:void(0)" onclick="document.querySelector('[data-tab=searchTab]').click()"><i class="fas fa-chevron-right"></i> All Code Categories</a></li>
+                    <li><a href="javascript:void(0)" onclick="document.querySelector('[data-tab=androidTab]').click()"><i class="fas fa-chevron-right"></i> All Code Categories</a></li>
                     <li><a href="javascript:void(0)" onclick="document.querySelector('[data-tab=deviceTab]').click()"><i class="fas fa-chevron-right"></i> Performance & Telemetry</a></li>
                     <li><a href="javascript:void(0)" onclick="document.querySelector('[data-tab=hackTab]').click()"><i class="fas fa-chevron-right"></i> Engineering Codes</a></li>
                 </ul>

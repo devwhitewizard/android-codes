@@ -371,6 +371,7 @@
             50%  { transform: scale(1.4); }
             100% { transform: scale(1); }
         }
+
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: #f8fafd;
@@ -516,6 +517,7 @@
                 padding: 3rem 1.5rem 1.5rem;
             }
         }
+
 
         .copy-btn {
             background: #eef2f7;
@@ -739,43 +741,7 @@
             margin: 0;
         }
 
-        .main-footer {
-            margin-top: 3rem;
-            border-top: 2px dashed #bfd9ec;
-            padding-top: 2rem;
-            color: #4a627a;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-        .footer-disclaimer {
-            background: #f8fafd;
-            border: 1px solid #d3e3f2;
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .footer-disclaimer h4 {
-            color: #bd3c1a;
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1rem;
-        }
-        .footer-disclaimer p {
-            margin-bottom: 0.6rem;
-        }
-        .footer-disclaimer p:last-child {
-            margin-bottom: 0;
-        }
-        .footer-disclaimer strong {
-            color: #1e6f9f;
-        }
-        .footer-bottom {
-            text-align: center;
-            color: #6d8faa;
-            font-size: 0.8rem;
-        }
+
         @media (max-width: 600px) {
             body { padding: 1rem; }
             .code-card { flex-direction: column; align-items: flex-start; }
